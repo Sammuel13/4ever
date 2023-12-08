@@ -1,11 +1,12 @@
 package modelo;
 
+//obrigatório
 public class Convidado extends Participante {
     private String empresa;
 
-    public Convidado(String c, String n, String e) {
-        super(c, n);
-        empresa = e;
+    public Convidado(String cpf, String datNasc, String emp) {
+        super(cpf, datNasc);
+        empresa = emp;
     }
 
     public String getEmpresa() {

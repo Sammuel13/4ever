@@ -1,5 +1,6 @@
 package modelo;
 
+//obrigatório
 public class Ingresso {
 	private String codigo;
 	private String telefone;
@@ -12,6 +13,7 @@ public class Ingresso {
 		// associar cpf com participante
 	}
 
+	// obrigatório
 	public double calcularPreco() {
 		return evento.getPreco();
 	}

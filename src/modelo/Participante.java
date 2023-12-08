@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.Period;
 
+//obrigatório
 public class Participante {
     private String cpf;
     private String nascimento;
@@ -14,6 +15,7 @@ public class Participante {
         nascimento = n;
     }
 
+ // obrigatório
     public int calcularIdade() {
         LocalDate dataNascimento = LocalDate.parse(nascimento);
         LocalDate dataAtual = LocalDate.now();

@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
+// obrigatório
 public class Evento {
 	private int id;
 	private String data;
@@ -11,10 +12,6 @@ public class Evento {
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();
 
 	public Evento(int id, String da, String de, int c, double p) throws Exception {
-		if (c < 2)
-			throw new Exception("capacidade invalida: " + c);
-		if (preco < 0)
-			throw new Exception("preco invalido: " + p);
 		this.id = id;
 		data = da;
 		descricao = de;
@@ -42,6 +39,7 @@ public class Evento {
 		return preco;
 	}
 
+	// obrigatório
 	public boolean lotado() {
 		return ingressos.size() == capacidade;
 	}
@@ -50,10 +48,12 @@ public class Evento {
 		return ingressos;
 	}
 
+	// obrigatório
 	public int quantidadeIngressos() {
 		return ingressos.size();
 	}
 
+	// obrigatório
 	public double totalArrecadado() {
 		return ingressos.size() * preco;
 	}
