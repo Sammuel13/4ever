@@ -1,5 +1,7 @@
 package regras_negocio;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 import modelo.Participante;
@@ -16,35 +18,62 @@ public class Fachada {
 			throw new Exception("capacidade invalida: " + c);
 		if (p < 0)
 			throw new Exception("preco invalido: " + p);
-
+		if (da == null || da.trim().equals(""))
+			throw new Exception("data invalida: " + da);
+		if (de == null || de.trim().equals(""))
+			throw new Exception("descricao invalida: " + de);
 		int idEvento = repositorio.gerarId();
 		Evento ev = new Evento(idEvento, da, de, c, p);
 		repositorio.adicionar(ev);
 	}
 
-	public static void criarParticipante(String cpf, String datNasc) {
-		Participante p = new Participante(cpf, datNasc);
+	public static void criarParticipante(String cpf, String datNasc) throws Exception {
+		Participante p = repositorio.localizarParticipante(cpf);
+		if (p != null)
+			throw new Exception("participante ja existe: " + cpf);
+		if (datNasc == null || datNasc.trim().equals(""))
+			throw new Exception("data invalida: " + datNasc);
+		p = new Participante(cpf, datNasc);
 		repositorio.adicionar(p);
 	}
 
-	public static void criarConvidado(String cpf, String datNasc, String empresa) {
-		Convidado c = new Convidado(cpf, datNasc, empresa);
-		repositorio.adicionar(c);
+	public static void criarConvidado(String cpf, String datNasc, String empresa) throws Exception {
+		Participante p = repositorio.localizarParticipante(cpf);
+		if (p != null)
+			throw new Exception("convidado ja existe: " + cpf);
+		if (datNasc == null || datNasc.trim().equals(""))
+			throw new Exception("data invalida: " + datNasc);
+		if (empresa == null || empresa.trim().equals(""))
+			throw new Exception("empresa invalida: " + empresa);
+		p = new Convidado(cpf, datNasc, empresa);
+		repositorio.adicionar(p);
 	}
 
-	public static void criarIngresso(String idEvento, String cpf, String telefone) throws Exception {
+	public static void criarIngresso(int idEvento, String cpf, String telefone) throws Exception {
 		Participante p = repositorio.localizarParticipante(cpf);
 		if (p == null)
 			throw new Exception("participante inexistente: " + cpf);
 		Evento e = repositorio.localizarEvento(idEvento);
 		if (e == null)
 			throw new Exception("evento inexistente: " + idEvento);
+		if (e.quantidadeIngressos() >= e.getCapacidade())
+			throw new Exception("evento lotado: " + idEvento);
+		if (telefone == null || telefone.trim().equals(""))
+			throw new Exception("telefone invalido: " + telefone);
+		Ingresso i = repositorio.localizarIngresso(idEvento + "-" + cpf);
+		if (i != null)
+			throw new Exception("ingresso ja existe: " + idEvento + "-" + cpf);
 
-		Ingresso i = new Ingresso(idEvento + "-" + cpf, cpf, telefone);
+		i = new Ingresso(idEvento + "-" + cpf, cpf, telefone);
+
+		i.setEvento(e);
+		i.setParticipante(p);
+		e.adicionar(i);
+		p.adicionar(i);
 		repositorio.adicionar(i);
 	}
 
-	public static void apagarEvento(String idEvento) throws Exception {
+	public static void apagarEvento(int idEvento) throws Exception {
 		Evento e = repositorio.localizarEvento(idEvento);
 		if (e == null)
 			throw new Exception("evento inexistente: " + idEvento);
@@ -58,124 +87,54 @@ public class Fachada {
 		Participante p = repositorio.localizarParticipante(cpf);
 		if (p == null)
 			throw new Exception("participante inexistente: " + cpf);
-		if (p.quantidadeIngressos() > 0)
-			throw new Exception("participante com ingressos vendidos: " + cpf);
+
+		if (p.getIngressos().isEmpty()) {
+			repositorio.remover(p);
+			return;
+		}
+
+		LocalDate dataUltimoIngresso = LocalDate
+				.parse(p.getIngressos().get(p.getIngressos().size() - 1).getEvento().getData(), repositorio.df);
+		LocalDate dataAtual = LocalDate.now();
+		Period periodo = Period.between(dataUltimoIngresso, dataAtual);
+
+		if (periodo.getDays() < 0)
+			throw new Exception("participante tem ingressos");
+		// else
+		// for (Ingresso i : p.getIngressos())
+		// apagarIngresso(i.getCodigo());
+
+		else if (p.getIngressos().size() > 0)
+			for (int i = p.getIngressos().size() - 1; i >= 0; i--)
+				apagarIngresso(p.getIngressos().get(i).getCodigo());
 
 		repositorio.remover(p);
 	}
 
-	public static void criarAluno(String nome, double media) throws Exception {
-		Participante a = repositorio.localizarAluno(nome);
-		if (a != null) // aluno ja cadastrado no repositorio?
-			throw new Exception("criar aluno " + nome + " - aluno ja cadastrado: ");
-		if (media > 10.0 || media < 0)
-			throw new Exception("criar aluno " + nome + " - media fora do intervalo permitido " + media);
-
-		a = new Participante(nome, media);
-		repositorio.adicionar(a);
+	public static void apagarConvidado(String cpf) throws Exception {
+		apagarParticipante(cpf);
 	}
 
-	public static void criarProfessor(String nome, double salario) throws Exception {
-		Ingresso prof = repositorio.localizarProfessor(nome);
-		if (prof != null) // professor ja cadastrado no repositorio?
-			throw new Exception("criar professor " + nome + " - professor ja cadastrado:");
-		if (salario <= 0)
-			throw new Exception("criar professor " + nome + " - salario invalido " + salario);
+	public static void apagarIngresso(String codigo) throws Exception {
+		Ingresso i = repositorio.localizarIngresso(codigo);
+		if (i == null)
+			throw new Exception("ingresso inexistente: " + codigo);
 
-		Ingresso p = new Ingresso(nome, salario);
-		repositorio.adicionar(p);
+		i.getEvento().remover(i);
+		i.getParticipante().remover(i);
+		repositorio.remover(i);
 	}
 
-	public static void matricularAluno(String nome, int id) throws Exception {
-		Participante alu = repositorio.localizarAluno(nome);
-		if (alu == null) // aluno ja cadastrado na repositorio?
-			throw new Exception("matricular aluno - aluno inexistente: " + nome);
-
-		Turma turma = repositorio.localizarTurma(id);
-		if (turma == null) // turma ja cadastrada na repositorio?
-			throw new Exception("matricular aluno " + nome + "- id turma inexistente: " + id);
-		if (alu.estaMatriculado())
-			throw new Exception(
-					"matricular aluno " + nome + " - aluno ja esta matriculado numa turma " + alu.getTurma().getId());
-		if (turma.estaLotada())
-			throw new Exception("matricular aluno " + nome + "- esta turma esta lotada: id=" + id);
-
-		turma.adicionar(alu); // incluir aluno na turma
+	public static ArrayList<Participante> listarParticipantes() {
+		return repositorio.getParticipantes();
 	}
 
-	public static void alocarProfessor(String nome, int id) throws Exception {
-		Ingresso prof = repositorio.localizarProfessor(nome);
-		if (prof == null) // aluno ja cadastrado na repositorio?
-			throw new Exception("alocar professor " + nome + "- prof inexistente: ");
-		Turma turma = repositorio.localizarTurma(id);
-		if (turma == null) // turma ja cadastrada na repositorio?
-			throw new Exception("alocar professor " + nome + "- id turma inexistente: " + id);
-
-		if (prof.estaAlocado())
-			throw new Exception(
-					"alocar professor " + nome + "- professor ja esta alocado na turma " + prof.getTurma().getId());
-
-		turma.adicionar(prof); // relacionar professor com turma
+	public static ArrayList<Ingresso> listarIngressos() {
+		return repositorio.getIngressos();
 	}
 
-	public static void transferirAluno(String nome, int id) throws Exception {
-		Participante alu = repositorio.localizarAluno(nome);
-		if (alu == null) // aluno ja cadastrado na repositorio?
-			throw new Exception("transferir aluno " + nome + "- aluno inexistente: ");
-
-		Turma destino = repositorio.localizarTurma(id);
-		if (destino == null) // turma ja cadastrada na repositorio?
-			throw new Exception("transferir aluno " + nome + "- turma inexistente: " + id);
-
-		if (!alu.estaMatriculado())
-			throw new Exception("transferir aluno " + nome + "- aluno nao esta matriculado numa turma");
-
-		Turma atual = alu.getTurma();
-		if (atual == destino)
-			throw new Exception("transferir aluno " + nome + "- turma destino tem que ser diferente da turma atual="
-					+ atual.getId());
-
-		if (destino.estaLotada())
-			throw new Exception("transferir aluno " + nome + "- turma destino lotada id=" + destino.getId());
-
-		atual.remover(alu);
-		destino.adicionar(alu);
+	public static ArrayList<Evento> listarEventos() {
+		return repositorio.getEventos();
 	}
 
-	public static ArrayList<Participante> listarAlunos() {
-		return repositorio.getAlunos();
-	}
-
-	public static ArrayList<Ingresso> listarProfessores() {
-		return repositorio.getProfessores();
-	}
-
-	public static ArrayList<Turma> listarTurmas() {
-		return repositorio.getTurmas();
-	}
-
-	// TAREFAS EXTRAS
-
-	public static void cancelarMatriculaAlunoTurma(String nome) throws Exception {
-		Participante alu = repositorio.localizarAluno(nome);
-		if (alu == null) // aluno ja cadastrado na repositorio?
-			throw new Exception("cancelar matricula " + nome + "- aluno inexistente: ");
-
-		if (!alu.estaMatriculado())
-			throw new Exception("cancelar matricula  " + nome + "- aluno nao esta matriculado numa turma");
-
-		Turma atual = alu.getTurma();
-		atual.remover(alu);
-	}
-
-	public static void apagarAluno(String nome) throws Exception {
-		Participante alu = repositorio.localizarAluno(nome);
-		if (alu == null) // aluno ja cadastrado na repositorio?
-			throw new Exception("apagar matricula " + nome + "- aluno inexistente: ");
-
-		if (alu.estaMatriculado())
-			throw new Exception("apagar matricula  " + nome + "- aluno esta matriculado numa turma");
-
-		repositorio.remover(alu);
-	}
 }

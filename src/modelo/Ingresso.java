@@ -10,12 +10,22 @@ public class Ingresso {
 	public Ingresso(String c, String cpf, String t) {
 		codigo = c;
 		telefone = t;
-		// associar cpf com participante
 	}
 
 	// obrigatório
 	public double calcularPreco() {
-		return evento.getPreco();
+		return evento.getPreco() * (1 - calcularDesconto());
+	}
+
+	private double calcularDesconto() {
+		double desconto = 0;
+		if (participante.calcularIdade() < 18)
+			desconto += .1;
+		else if (participante.calcularIdade() >= 60)
+			desconto += .2;
+		if (participante instanceof Convidado)
+			desconto += .5;
+		return desconto;
 	}
 
 	public String getCodigo() {

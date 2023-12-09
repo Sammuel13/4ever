@@ -3,21 +3,22 @@ package modelo;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 //obrigatório
 public class Participante {
     private String cpf;
     private String nascimento;
-    private ArrayList<Ingresso> ingressos = new ArrayList<>(); // o aluno possui apena uma turma
+    private ArrayList<Ingresso> ingressos = new ArrayList<>();
 
     public Participante(String c, String n) {
         cpf = c;
         nascimento = n;
     }
 
- // obrigatório
+    // obrigatório
     public int calcularIdade() {
-        LocalDate dataNascimento = LocalDate.parse(nascimento);
+        LocalDate dataNascimento = LocalDate.parse(nascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         LocalDate dataAtual = LocalDate.now();
         Period periodo = Period.between(dataNascimento, dataAtual);
         return periodo.getYears();

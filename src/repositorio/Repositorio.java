@@ -1,5 +1,6 @@
 package repositorio;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import modelo.Participante;
@@ -11,73 +12,82 @@ public class Repositorio {
 	private ArrayList<Participante> participantes = new ArrayList<>();
 	private ArrayList<Ingresso> ingressos = new ArrayList<>();;
 
-	public void adicionar(Evento t) 	{
-		eventos.add(t);
+	public void adicionar(Evento e) {
+		eventos.add(e);
 	}
-	public void remover(Evento t) {
-		eventos.remove(t);
-	}
-	public Evento localizarTurma(int id) {
-		for(Evento t : eventos)
-			if (t.getId() == id)	return t;
 
+	public void remover(Evento e) {
+		eventos.remove(e);
+	}
+
+	public Evento localizarEvento(int id) {
+		for (Evento e : eventos)
+			if (e.getId() == id)
+				return e;
 		return null;
 	}
 
-	public void adicionar(Participante a) 	{
-		participantes.add( a);
+	public void adicionar(Participante p) {
+		participantes.add(p);
 	}
-	public void remover(Participante a) {
-		participantes.remove(a);
-	}
-	public Participante localizarAluno(String nome) {
-		for(Participante a: participantes)
-			if(a.getNome().equals(nome))
-				return a;
-		return null;
-	}
-	
 
-	public void adicionar(Ingresso p) 	{
-		ingressos.add(p);
+	public void remover(Participante p) {
+		participantes.remove(p);
 	}
-	public void remover(Ingresso p) {
-		ingressos.remove(p);
-	}
-	public Ingresso localizarProfessor(String nome) {
-		for(Ingresso p: ingressos)
-			if(p.getNome().equals(nome))
+
+	public Participante localizarParticipante(String cpf) {
+		for (Participante p : participantes)
+			if (p.getCpf().equals(cpf))
 				return p;
 		return null;
 	}
 
+	public void adicionar(Ingresso i) {
+		ingressos.add(i);
+	}
 
-	public ArrayList<Evento> getTurmas() {
+	public void remover(Ingresso i) {
+		ingressos.remove(i);
+	}
+
+	public Ingresso localizarIngresso(String codigo) {
+		for (Ingresso i : ingressos)
+			if (i.getCodigo().equals(codigo))
+				return i;
+		return null;
+	}
+
+	public ArrayList<Evento> getEventos() {
 		return eventos;
 	}
-	public ArrayList<Participante> getAlunos() {
+
+	public ArrayList<Participante> getParticipantes() {
 		return participantes;
 	}
-	public ArrayList<Ingresso> getProfessores() {
+
+	public ArrayList<Ingresso> getIngressos() {
 		return ingressos;
 	}
 
-	public int getTotalTurmas(){
+	public int getTotalEventos() {
 		return eventos.size();
 	}
-	public int getTotalAlunos(){
+
+	public int getTotalParticipantes() {
 		return participantes.size();
 	}
-	public int getTotalProfessores(){
+
+	public int getTotalIngressos() {
 		return ingressos.size();
 	}
 
-	
+	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 	public int gerarId() {
 		if (eventos.isEmpty())
 			return 1;
 		else {
-			Evento ultima = eventos.get(eventos.size()-1);
+			Evento ultima = eventos.get(eventos.size() - 1);
 			return ultima.getId() + 1;
 		}
 	}
