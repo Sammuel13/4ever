@@ -19,9 +19,8 @@ public class TelaEventos extends javax.swing.JFrame {
      */
     public TelaEventos() {
 
-        eventos = new Listar();
+        eventos = new Main();
         criar = new Criar();
-        listar = new Listar();
         apagar = new Apagar();
         pesquisar = new Pesquisar();
 
@@ -59,11 +58,6 @@ public class TelaEventos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Eventos");
         jLabel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 204, 0)));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Criar");
@@ -82,7 +76,6 @@ public class TelaEventos extends javax.swing.JFrame {
                 jLabel3MouseClicked(evt);
             }
         });
-
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Apagar");
         jLabel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 204, 0)));
@@ -198,18 +191,15 @@ public class TelaEventos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel1MouseClicked
-        eventos.updateScrollPane(0);
-        showForm(eventos);
-    }// GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel2MouseClicked
         showForm(criar);
     }// GEN-LAST:event_jLabel2MouseClicked
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel3MouseClicked
-        showForm(listar);
-    }// GEN-LAST:event_jLabel3MouseClicked
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel1MouseClicked
+        eventos.updateScrollPane(0);
+        showForm(eventos);
+    }// GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel4MouseClicked
         showForm(apagar);
@@ -262,9 +252,8 @@ public class TelaEventos extends javax.swing.JFrame {
         });
     }
 
-    private Listar eventos;
+    private Main eventos;
     private Criar criar;
-    private Listar listar;
     private Apagar apagar;
     private Pesquisar pesquisar;
 

@@ -19,9 +19,9 @@ import modelo.Ingresso;
 import modelo.Participante;
 import regras_negocio.Fachada;
 
-public class Listar extends JPanel {
+public class Main extends JPanel {
 
-    public Listar() {
+    public Main() {
         initComponents();
     }
 
@@ -48,10 +48,10 @@ public class Listar extends JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        eventoTable = new javax.swing.JTable();
-
         setPreferredSize(new java.awt.Dimension(606, 641));
-
+        
+        
+        eventoTable = new javax.swing.JTable();
         eventoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -76,7 +76,6 @@ public class Listar extends JPanel {
             }
         });
         eventoTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(eventoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

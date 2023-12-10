@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="appswing.components.Listar" name="gradientJPanel1">
+    <Container class="appswing.components.Model" name="gradientJPanel1">
 
       <Layout>
         <DimensionLayout dim="0">
