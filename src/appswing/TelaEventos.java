@@ -197,7 +197,6 @@ public class TelaEventos extends javax.swing.JFrame {
     }// GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel1MouseClicked
-        eventos.updateScrollPane(0);
         showForm(eventos);
     }// GEN-LAST:event_jLabel1MouseClicked
 
