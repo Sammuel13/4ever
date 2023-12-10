@@ -19,7 +19,7 @@ public class TelaEventos extends javax.swing.JFrame {
      */
     public TelaEventos() {
 
-        eventos = new Main();
+        eventos = new ListarEventos();
         criar = new Criar();
         apagar = new Apagar();
         pesquisar = new Pesquisar();
@@ -251,7 +251,7 @@ public class TelaEventos extends javax.swing.JFrame {
         });
     }
 
-    private Main eventos;
+    private ListarEventos eventos;
     private Criar criar;
     private Apagar apagar;
     private Pesquisar pesquisar;

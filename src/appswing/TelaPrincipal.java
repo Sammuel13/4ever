@@ -26,7 +26,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        gradientJPanel1 = new appswing.components.Main();
+        gradientJPanel1 = new appswing.components.ListarEventos();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -238,7 +238,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private TelaParticipantes participantes;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private appswing.components.Main gradientJPanel1;
+    private appswing.components.ListarEventos gradientJPanel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

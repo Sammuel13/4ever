@@ -19,9 +19,9 @@ import modelo.Ingresso;
 import modelo.Participante;
 import regras_negocio.Fachada;
 
-public class Main extends JPanel {
+public class ListarEventos extends JPanel {
 
-    public Main() {
+    public ListarEventos() {
         initComponents();
     }
 
