@@ -7,9 +7,9 @@ import java.awt.Color;
 import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 
-public class GradientJPanel extends JPanel {
+public class Pesquisar extends JPanel {
 
-    public GradientJPanel() {
+    public Pesquisar() {
         initComponents();
     }
 
@@ -34,6 +34,8 @@ public class GradientJPanel extends JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setPreferredSize(new java.awt.Dimension(606, 641));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
