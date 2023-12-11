@@ -20,8 +20,8 @@ public class TelaEventos extends javax.swing.JFrame {
     public TelaEventos() {
 
         eventos = new ListarEventos();
-        criar = new Criar();
-        apagar = new Apagar();
+        criar = new CriarEvento();
+        apagar = new ApagarEvento();
         pesquisar = new Pesquisar();
 
         initComponents();
@@ -252,8 +252,8 @@ public class TelaEventos extends javax.swing.JFrame {
     }
 
     private ListarEventos eventos;
-    private Criar criar;
-    private Apagar apagar;
+    private CriarEvento criar;
+    private ApagarEvento apagar;
     private Pesquisar pesquisar;
 
     // private static int janela = 1;

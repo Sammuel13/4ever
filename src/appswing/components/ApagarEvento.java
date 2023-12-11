@@ -7,9 +7,9 @@ import java.awt.Color;
 import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
 
-public class Apagar extends JPanel {
+public class ApagarEvento extends JPanel {
 
-    public Apagar() {
+    public ApagarEvento() {
         initComponents();
     }
 
