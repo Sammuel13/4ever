@@ -53,23 +53,22 @@ public class ListarIngressos extends JPanel {
         
         table = new javax.swing.JTable();
 
-        ArrayList<Evento> eventos = Fachada.listarEventos();
-        System.out.println(eventos);
+        ArrayList<Ingresso> ingressos = Fachada.listarIngressos();
+        System.out.println(ingressos);
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
         model.setRowCount(0);
 
-        model.addColumn("ID");
+        model.addColumn("Código");
+        model.addColumn("Telefone");
+        model.addColumn("P Ingresso");
+        model.addColumn("P Evento");
         model.addColumn("Data");
-        model.addColumn("Capacidade");
-        model.addColumn("Preço");
-        model.addColumn("Ingresso");
-        model.addColumn("Total");
-        model.addColumn("Lotado");
+        model.addColumn("Idade");
 
-        for (Evento evento : eventos) {
-            model.addRow(new Object[] { evento.getId(), evento.getData(), evento.getCapacidade(), evento.getPreco(), evento.getIngressos().size(), evento.totalArrecadado(), evento.lotado() });
+        for (Ingresso ingresso : ingressos) {
+            model.addRow(new Object[] { ingresso.getCodigo(), ingresso.getTelefone(), ingresso.calcularPreco(), ingresso.getEvento().getPreco(), ingresso.getEvento().getData(), ingresso.getParticipante().calcularIdade() });
         }
 
         table.setModel(model);
