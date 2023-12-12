@@ -1,11 +1,18 @@
 package appswing.components;
 
 import javax.swing.JPanel;
+
+import modelo.Ingresso;
+import regras_negocio.Fachada;
+import repositorio.Repositorio;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.LinearGradientPaint;
 import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Pesquisar extends JPanel {
 
@@ -74,6 +81,11 @@ public class Pesquisar extends JPanel {
         jButton1.setText("CONFIRMAR");
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -117,6 +129,30 @@ public class Pesquisar extends JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String id = jTextField3.getText();
+
+        try {
+            ArrayList<Ingresso> ingressos;
+            ingressos = Fachada.listarIngressos();
+            if (ingressos.isEmpty()) {
+                throw new Exception("Nenhum ingresso cadastrado");
+            }
+            int count = 0;
+            for (Ingresso i : ingressos) {
+                if (i.getEvento().getId() == Integer.parseInt(id)) {
+                    count++;
+                    jTextArea2.setText("ID do Evento: " + i.getEvento().getId() + "\n" + "CPF do Participante: " + i.getParticipante().getCpf() + "\n" + "Telefone: " + i.getTelefone() + "\n");
+                }
+            }
+            if (count == 0) {
+                throw new Exception("Nenhum ingresso encontrado");
+            }
+        } catch (Exception e) {
+            jTextArea2.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

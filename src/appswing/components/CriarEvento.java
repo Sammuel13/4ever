@@ -1,6 +1,9 @@
 package appswing.components;
 
 import javax.swing.JPanel;
+
+import regras_negocio.Fachada;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -134,6 +137,11 @@ public class CriarEvento extends JPanel {
         jButton1.setText("CONFIRMAR");
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -198,6 +206,23 @@ public class CriarEvento extends JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String data = jFormattedTextField1.getText();
+        String descricao = jTextField2.getText();
+        String capacidade = jTextField3.getText();
+        String preco = jTextField4.getText();
+        
+        try {
+            int capacidadeInt = Integer.parseInt(capacidade);
+            double precoDouble = Double.parseDouble(preco);
+            Fachada.criarEvento(data, descricao, capacidadeInt, precoDouble);
+            jTextArea2.setText("Evento criado com sucesso!");
+        } catch (Exception e) {
+            jTextArea2.setText("Evento não pode ser criado: " + e.getMessage());
+            return;
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:

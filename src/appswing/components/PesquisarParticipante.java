@@ -4,6 +4,11 @@
  */
 package appswing.components;
 
+import java.util.ArrayList;
+
+import modelo.Ingresso;
+import regras_negocio.Fachada;
+
 /**
  *
  * @author anton
@@ -49,6 +54,11 @@ public class PesquisarParticipante extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CONFIRMAR");
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -83,10 +93,9 @@ public class PesquisarParticipante extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jFormattedTextField2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(370, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,6 +121,30 @@ public class PesquisarParticipante extends javax.swing.JPanel {
     private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField2ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String cpf = jFormattedTextField2.getText();
+
+        try {
+            ArrayList<Ingresso> ingressos;
+            ingressos = Fachada.listarIngressos();
+            if (ingressos.isEmpty()) {
+                throw new Exception("Nenhum ingresso cadastrado");
+            }
+            int count = 0;
+            for (Ingresso i : ingressos) {
+                if (i.getParticipante().getCpf().equals(cpf)) {
+                    count++;
+                    jTextArea2.setText("ID do Evento: " + i.getEvento().getId() + "\n" + "CPF do Participante: " + i.getParticipante().getCpf() + "\n" + "Telefone: " + i.getTelefone() + "\n");
+                }
+            }
+            if (count == 0) {
+                throw new Exception("Nenhum ingresso encontrado");
+            }
+        } catch (Exception e) {
+            jTextArea2.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

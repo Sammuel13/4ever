@@ -4,6 +4,8 @@
  */
 package appswing.components;
 
+import regras_negocio.Fachada;
+
 /**
  *
  * @author anton
@@ -91,6 +93,11 @@ public class CriarParticipante extends javax.swing.JPanel {
         jButton1.setText("CONFIRMAR");
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -178,6 +185,24 @@ public class CriarParticipante extends javax.swing.JPanel {
     private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField2ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String cpf = jFormattedTextField2.getText();
+        String dataNascimento = jFormattedTextField1.getText();
+        String empresa = jTextField4.getText();
+
+        try {
+            if (empresa.trim().isEmpty()) {
+                Fachada.criarParticipante(cpf, dataNascimento);
+                jTextArea2.setText("Participante criado com sucesso!");
+            } else {
+                Fachada.criarConvidado(cpf, dataNascimento, empresa);
+                jTextArea2.setText("Convidado criado com sucesso!");
+            }
+        } catch (Exception ex) {
+            jTextArea2.setText("Erro ao criar participante!");
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

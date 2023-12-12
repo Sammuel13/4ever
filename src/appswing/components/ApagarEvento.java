@@ -1,6 +1,9 @@
 package appswing.components;
 
 import javax.swing.JPanel;
+
+import regras_negocio.Fachada;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -73,6 +76,11 @@ public class ApagarEvento extends JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("CONFIRMAR");
         jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -116,6 +124,20 @@ public class ApagarEvento extends JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String input = jTextField2.getText();
+
+        try {
+            int id = Integer.parseInt(input);
+            Fachada.apagarEvento(id);
+            jTextArea2.setText("Evento apagado com sucesso!");
+        } catch (Exception e) {
+            jTextArea2.setText("Evento não pode ser apagado: " + e.getMessage());
+            return;
+        }
+
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
