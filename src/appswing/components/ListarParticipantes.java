@@ -54,7 +54,6 @@ public class ListarParticipantes extends JPanel {
         table = new javax.swing.JTable();
 
         ArrayList<Participante> participantes = Fachada.listarParticipantes();
-        System.out.println(participantes);
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         

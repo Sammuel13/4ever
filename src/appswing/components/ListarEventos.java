@@ -54,7 +54,6 @@ public class ListarEventos extends JPanel {
         table = new javax.swing.JTable();
 
         ArrayList<Evento> eventos = Fachada.listarEventos();
-        System.out.println(eventos);
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         

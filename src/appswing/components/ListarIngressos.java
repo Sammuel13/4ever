@@ -54,7 +54,6 @@ public class ListarIngressos extends JPanel {
         table = new javax.swing.JTable();
 
         ArrayList<Ingresso> ingressos = Fachada.listarIngressos();
-        System.out.println(ingressos);
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         

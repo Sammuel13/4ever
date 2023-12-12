@@ -22,12 +22,10 @@ public class Repositorio {
 
 	public void adicionar(Evento e) {
 		eventos.add(e);
-		salvarObjetos();
 	}
 
 	public void remover(Evento e) {
 		eventos.remove(e);
-		salvarObjetos();
 	}
 
 	public Evento localizarEvento(int id) {
@@ -39,12 +37,10 @@ public class Repositorio {
 
 	public void adicionar(Participante p) {
 		participantes.add(p);
-		salvarObjetos();
 	}
 
 	public void remover(Participante p) {
 		participantes.remove(p);
-		salvarObjetos();
 	}
 
 	public Participante localizarParticipante(String cpf) {
@@ -56,12 +52,10 @@ public class Repositorio {
 
 	public void adicionar(Ingresso i) {
 		ingressos.add(i);
-		salvarObjetos();
 	}
 
 	public void remover(Ingresso i) {
 		ingressos.remove(i);
-		salvarObjetos();
 	}
 
 	public Ingresso localizarIngresso(String codigo) {
@@ -184,8 +178,6 @@ public class Repositorio {
 			String codigo, telefone, cpf;
 			int id;
 			Ingresso ingresso;
-			Evento eve;
-			Participante partic;
 			File f = new File( new File(".\\ingressos.csv").getCanonicalPath())  ;
 			Scanner arquivo3 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo3.hasNextLine()) 	{
@@ -196,14 +188,14 @@ public class Repositorio {
 				telefone = partes[1];
 				id = Integer.parseInt(codigo.split("-")[0]);
 				cpf = codigo.split("-")[1];
-				eve = this.localizarEvento(id);
-				partic = this.localizarParticipante(cpf);
+				evento = this.localizarEvento(id);
+				participante = this.localizarParticipante(cpf);
 				
 				ingresso = new Ingresso(codigo,cpf,telefone);
-				ingresso.setEvento(eve);
-				ingresso.setParticipante(partic);
-				eve.adicionar(ingresso);
-				partic.adicionar(ingresso);
+				ingresso.setEvento(evento);
+				ingresso.setParticipante(participante);
+				evento.adicionar(ingresso);
+				participante.adicionar(ingresso);
 				this.adicionar(ingresso);
 			}
 			arquivo3.close();

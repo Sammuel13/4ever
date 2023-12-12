@@ -237,6 +237,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private TelaIngressos ingressos;
     private TelaParticipantes participantes;
 
+    public static String output;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private appswing.components.ListarEventos gradientJPanel1;
     private javax.swing.JLabel jLabel1;

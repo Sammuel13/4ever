@@ -193,6 +193,7 @@ public class TelaParticipantes extends javax.swing.JFrame {
 
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel2MouseClicked
+        criar.updateOutput();
         showForm(criar);
     }// GEN-LAST:event_jLabel2MouseClicked
 
@@ -201,10 +202,12 @@ public class TelaParticipantes extends javax.swing.JFrame {
     }// GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel4MouseClicked
+        apagar.updateOutput();
         showForm(apagar);
     }// GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jLabel7MouseClicked
+        pesquisar.updateOutput();
         showForm(pesquisar);
     }// GEN-LAST:event_jLabel7MouseClicked
 

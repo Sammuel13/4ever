@@ -25,6 +25,7 @@ public class Fachada {
 		int idEvento = repositorio.gerarId();
 		Evento ev = new Evento(idEvento, da, de, c, p);
 		repositorio.adicionar(ev);
+		repositorio.salvarObjetos();
 	}
 
 	public static void criarParticipante(String cpf, String datNasc) throws Exception {
@@ -35,6 +36,7 @@ public class Fachada {
 			throw new Exception("data invalida: " + datNasc);
 		p = new Participante(cpf, datNasc);
 		repositorio.adicionar(p);
+		repositorio.salvarObjetos();
 	}
 
 	public static void criarConvidado(String cpf, String datNasc, String empresa) throws Exception {
@@ -47,6 +49,7 @@ public class Fachada {
 			throw new Exception("empresa invalida: " + empresa);
 		p = new Convidado(cpf, datNasc, empresa);
 		repositorio.adicionar(p);
+		repositorio.salvarObjetos();
 	}
 
 	public static void criarIngresso(int idEvento, String cpf, String telefone) throws Exception {
@@ -71,6 +74,7 @@ public class Fachada {
 		e.adicionar(i);
 		p.adicionar(i);
 		repositorio.adicionar(i);
+		repositorio.salvarObjetos();
 	}
 
 	public static void apagarEvento(int idEvento) throws Exception {
@@ -81,6 +85,7 @@ public class Fachada {
 			throw new Exception("evento com ingressos vendidos: " + idEvento);
 
 		repositorio.remover(e);
+		repositorio.salvarObjetos();
 	}
 
 	public static void apagarParticipante(String cpf) throws Exception {
@@ -109,6 +114,7 @@ public class Fachada {
 				apagarIngresso(p.getIngressos().get(i).getCodigo());
 
 		repositorio.remover(p);
+		repositorio.salvarObjetos();
 	}
 
 	public static void apagarConvidado(String cpf) throws Exception {
@@ -123,6 +129,7 @@ public class Fachada {
 		i.getEvento().remover(i);
 		i.getParticipante().remover(i);
 		repositorio.remover(i);
+		repositorio.salvarObjetos();
 	}
 
 	public static ArrayList<Participante> listarParticipantes() {
