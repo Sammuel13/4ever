@@ -55,7 +55,11 @@ public class Evento {
 
 	// obrigatório
 	public double totalArrecadado() {
-		return ingressos.size() * preco;
+		double total = 0;
+		for (Ingresso i : ingressos) {
+			total += i.calcularPreco();
+		}
+		return total;
 	}
 
 	public void adicionar(Ingresso ing) throws Exception {
