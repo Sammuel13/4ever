@@ -7,11 +7,6 @@ import modelo.Ingresso;
 import regras_negocio.Fachada;
 import repositorio.Repositorio;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.LinearGradientPaint;
-import java.awt.geom.Point2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -19,24 +14,6 @@ public class Pesquisar extends JPanel {
 
     public Pesquisar() {
         initComponents();
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        int width = getWidth();
-        int height = getHeight();
-
-        Point2D start = new Point2D.Float(0, 0);
-        Point2D end = new Point2D.Float(width, height); // Gradiente diagonal
-        float[] fractions = { 0.0f, 0.5f, 1.0f };
-        // Ajuste essas cores para combinar com a imagem enviada
-        Color[] colors = { new Color(255, 105, 180), new Color(75, 0, 130), new Color(0, 191, 255) };
-
-        LinearGradientPaint gp = new LinearGradientPaint(start, end, fractions, colors);
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, width, height);
     }
 
     @SuppressWarnings("unchecked")
