@@ -52,4 +52,11 @@ public class Ingresso {
 		participante = p;
 	}
 
+	@Override
+	public String toString() {
+		return "Ingresso [codigo=" + codigo + "]";
+	}
+	
+	
+
 }

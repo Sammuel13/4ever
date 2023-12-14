@@ -63,8 +63,6 @@ public class Evento {
 	}
 
 	public void adicionar(Ingresso ing) throws Exception {
-		if (lotado())
-			throw new Exception("evento lotado");
 		ingressos.add(ing);
 		ing.setEvento(this);
 	}
@@ -73,5 +71,13 @@ public class Evento {
 		ingressos.remove(ing);
 		ing.setEvento(null);
 	}
+
+	@Override
+	public String toString() {
+		return "Evento [id=" + id + ", data=" + data + ", descricao=" + descricao + ", capacidade=" + capacidade
+				+ ", preco=" + preco + ", ingressos=" + ingressos + "]";
+	}
+	
+	
 
 }

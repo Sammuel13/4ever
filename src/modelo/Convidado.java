@@ -16,4 +16,5 @@ public class Convidado extends Participante {
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
+    
 }

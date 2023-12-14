@@ -46,4 +46,10 @@ public class Participante {
         ing.setParticipante(null);
     }
 
+	@Override
+	public String toString() {
+		return "Participante [cpf=" + cpf + ", nascimento=" + nascimento + ", ingressos=" + ingressos + "]";
+	}
+
+    
 }
